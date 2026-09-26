@@ -1,350 +1,948 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Modul Tujuan PBA</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:#FFFFFF; --bg-alt:#FAFAFA; --ink:#0A0A0A; --muted:#6B6B6B;
-    --border:#E6E6E6; --border-strong:#0A0A0A;
-    --c-ideal:#16A34A; --c-ideal-soft:rgba(22,163,74,0.10);
-    --c-formal:#2563EB; --c-formal-soft:rgba(37,99,235,0.10);
-    --c-filosofis:#8B5CF6; --c-filosofis-soft:rgba(139,92,246,0.10);
-    --c-praktis:#EA580C; --c-praktis-soft:rgba(234,88,12,0.10);
-    --c-neutral:#B45309; --c-neutral-soft:rgba(180,83,9,0.10);
-    --font-display:'Space Grotesk','Inter',sans-serif;
-    --font-body:'Inter','Segoe UI',sans-serif;
-    --font-mono:'JetBrains Mono',monospace;
-    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg:#0A0A0A; --bg-alt:#141414; --ink:#FAFAFA; --muted:#9A9A9A; --border:#262626; --border-strong:#FAFAFA; }
-  }
-  :root[data-theme="dark"] { --bg:#0A0A0A; --bg-alt:#141414; --ink:#FAFAFA; --muted:#9A9A9A; --border:#262626; --border-strong:#FAFAFA; }
-  html { scroll-padding-top:64px; scroll-behavior:smooth; }
-  * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-body); line-height:1.6; }
-  .wrap { max-width:760px; margin:0 auto; padding:0 24px; }
-  a { color:inherit; }
-  .nav { position:sticky; top:env(safe-area-inset-top,0px); z-index:10; display:flex; justify-content:center; padding:16px 12px; background:var(--bg); }
-  .nav-pill { display:flex; gap:2px; border:1px solid var(--border); border-radius:999px; padding:6px; overflow-x:auto; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
-  .nav-pill a { font-family:var(--font-mono); font-size:0.68rem; text-decoration:none; color:var(--muted); padding:8px 11px; border-radius:999px; white-space:nowrap; }
-  .nav-pill a:hover { background:var(--bg-alt); color:var(--ink); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Modul Tujuan PBA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FFFFFF;
+            --bg-alt: #FAFAFA;
+            --ink: #0A0A0A;
+            --muted: #6B6B6B;
+            --border: #E6E6E6;
+            --border-strong: #0A0A0A;
+            --c-ideal: #16A34A;
+            --c-ideal-soft: rgba(22, 163, 74, 0.10);
+            --c-formal: #2563EB;
+            --c-formal-soft: rgba(37, 99, 235, 0.10);
+            --c-filosofis: #8B5CF6;
+            --c-filosofis-soft: rgba(139, 92, 246, 0.10);
+            --c-praktis: #EA580C;
+            --c-praktis-soft: rgba(234, 88, 12, 0.10);
+            --c-neutral: #B45309;
+            --c-neutral-soft: rgba(180, 83, 9, 0.10);
+            --font-display: 'Space Grotesk', 'Inter', sans-serif;
+            --font-body: 'Inter', 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
 
-  .hero { padding:44px 24px 8px; }
-  .eyebrow { display:inline-block; font-family:var(--font-mono); font-size:0.72rem; color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:5px 12px; margin-bottom:20px; }
-  .hero h1 { font-family:var(--font-display); font-weight:700; font-size:clamp(1.9rem,5.5vw,2.9rem); line-height:1.1; letter-spacing:-0.02em; margin:0 0 16px; }
-  .hero p { color:var(--muted); font-size:1.02rem; max-width:58ch; margin:0 0 30px; }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0A0A0A;
+                --bg-alt: #141414;
+                --ink: #FAFAFA;
+                --muted: #9A9A9A;
+                --border: #262626;
+                --border-strong: #FAFAFA;
+            }
+        }
 
-  section.sec { padding:8px 0 52px; }
-  .card { border:1px solid var(--border); border-radius:20px; padding:30px; background:var(--bg-alt); }
-  .card-head { display:flex; align-items:flex-start; gap:14px; margin-bottom:14px; }
-  .icon-badge { flex:none; width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; }
-  .icon-badge svg { width:22px; height:22px; }
-  .tag { display:block; font-family:var(--font-mono); font-size:0.7rem; color:var(--muted); margin-bottom:5px; }
-  h2 { font-family:var(--font-display); font-weight:700; font-size:clamp(1.3rem,3vw,1.6rem); letter-spacing:-0.01em; margin:0 0 4px; }
-  .sub { color:var(--muted); margin:0 0 22px; max-width:58ch; font-size:0.94rem; }
+        :root[data-theme="dark"] {
+            --bg: #0A0A0A;
+            --bg-alt: #141414;
+            --ink: #FAFAFA;
+            --muted: #9A9A9A;
+            --border: #262626;
+            --border-strong: #FAFAFA;
+        }
 
-  .quote-grid { display:grid; gap:14px; }
-  .quote { border:1px solid var(--border); border-radius:14px; padding:18px 20px; background:var(--bg); font-style:italic; font-size:0.94rem; }
-  .quote cite { display:block; font-style:normal; font-family:var(--font-mono); font-size:0.7rem; color:var(--muted); margin-top:10px; }
+        html {
+            scroll-padding-top: 64px;
+            scroll-behavior: smooth;
+        }
 
-  .quad-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  @media (max-width:520px){ .quad-grid{ grid-template-columns:1fr; } }
-  .quad { border:1px solid var(--border); border-radius:16px; padding:18px; background:var(--bg); }
-  .quad .dot { width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:7px; }
-  .quad b { font-family:var(--font-display); font-size:1rem; }
-  .quad p { margin:6px 0 0; font-size:0.85rem; color:var(--muted); }
+        * {
+            box-sizing: border-box;
+        }
 
-  .branch { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px; }
-  @media (max-width:520px){ .branch{ grid-template-columns:1fr; } }
-  .branch-box { border:1px solid var(--border); border-radius:14px; padding:16px; background:var(--bg); }
-  .branch-box h4 { margin:0 0 10px; font-size:0.95rem; font-family:var(--font-display); }
-  .branch-box ul { margin:0; padding-left:18px; font-size:0.88rem; color:var(--muted); }
-  .branch-box ul li { margin-bottom:4px; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: var(--font-body);
+            line-height: 1.6;
+        }
 
-  .flow { display:flex; flex-direction:column; }
-  .flow-item { display:flex; gap:14px; padding:0 0 22px; position:relative; }
-  .flow-item:last-child { padding-bottom:0; }
-  .flow-item::after { content:""; position:absolute; left:12px; top:28px; bottom:0; width:1px; background:var(--border); }
-  .flow-item:last-child::after { display:none; }
-  .num { flex:none; width:25px; height:25px; border-radius:50%; border:1px solid var(--c-formal); color:var(--c-formal); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:0.68rem; background:var(--bg); }
-  .flow-item h3 { margin:1px 0 5px; font-size:0.95rem; font-weight:600; }
-  .flow-item ul { margin:0; padding-left:16px; color:var(--muted); font-size:0.86rem; }
-  .flow-item ul li { margin-bottom:2px; }
+        .wrap {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-  .chip-cluster { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:6px 0 4px; }
-  .chip-cluster span { border-radius:999px; padding:9px 16px; font-size:0.86rem; font-weight:500; }
+        a {
+            color: inherit;
+        }
 
-  .tbl-scroll { overflow-x:auto; margin-top:6px; }
-  table { border-collapse:collapse; width:100%; min-width:520px; font-size:0.82rem; }
-  th, td { border:1px solid var(--border); padding:8px 10px; text-align:left; vertical-align:top; }
-  th { font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; color:var(--muted); background:var(--bg); }
-  td { color:var(--ink); }
-  .tbl-title { font-family:var(--font-mono); font-size:0.7rem; color:var(--muted); text-transform:uppercase; margin:22px 0 8px; }
-  .tbl-title:first-child { margin-top:0; }
+        .nav {
+            position: sticky;
+            top: env(safe-area-inset-top, 0px);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            padding: 16px 12px;
+            background: var(--bg);
+        }
 
-  footer { padding:32px 24px 44px; text-align:center; color:var(--muted); font-family:var(--font-mono); font-size:0.72rem; }
+        .nav-pill {
+            display: flex;
+            gap: 2px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px;
+            overflow-x: auto;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
 
-  .nav-pill a.active { background:var(--ink); color:var(--bg); }
-  .reflect { border:1px dashed var(--border); border-radius:14px; padding:16px 18px; margin-top:20px; font-size:0.9rem; color:var(--muted); }
-  .reflect b { color:var(--ink); font-family:var(--font-mono); font-size:0.7rem; text-transform:uppercase; display:block; margin-bottom:6px; }
-  .backtotop { position:fixed; right:18px; bottom:18px; width:42px; height:42px; border-radius:50%; background:var(--ink); color:var(--bg); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; pointer-events:none; transition:opacity .2s; box-shadow:0 4px 14px rgba(0,0,0,0.18); z-index:20; }
-  .backtotop.show { opacity:1; pointer-events:auto; }
-</style>
+        .nav-pill a {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            text-decoration: none;
+            color: var(--muted);
+            padding: 8px 11px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .nav-pill a:hover {
+            background: var(--bg-alt);
+            color: var(--ink);
+        }
+
+        .hero {
+            padding: 44px 24px 8px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 5px 12px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(1.9rem, 5.5vw, 2.9rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin: 0 0 16px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 1.02rem;
+            max-width: 58ch;
+            margin: 0 0 30px;
+        }
+
+        section.sec {
+            padding: 8px 0 52px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            background: var(--bg-alt);
+        }
+
+        .card-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .icon-badge {
+            flex: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-badge svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .tag {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            letter-spacing: -0.01em;
+            margin: 0 0 4px;
+        }
+
+        .sub {
+            color: var(--muted);
+            margin: 0 0 22px;
+            max-width: 58ch;
+            font-size: 0.94rem;
+        }
+
+        .quote-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .quote {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            background: var(--bg);
+            font-style: italic;
+            font-size: 0.94rem;
+        }
+
+        .quote cite {
+            display: block;
+            font-style: normal;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        .quad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width:520px) {
+            .quad-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quad {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            background: var(--bg);
+        }
+
+        .quad .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 7px;
+        }
+
+        .quad b {
+            font-family: var(--font-display);
+            font-size: 1rem;
+        }
+
+        .quad p {
+            margin: 6px 0 0;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .branch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width:520px) {
+            .branch {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .branch-box {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            background: var(--bg);
+        }
+
+        .branch-box h4 {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
+            font-family: var(--font-display);
+        }
+
+        .branch-box ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        .branch-box ul li {
+            margin-bottom: 4px;
+        }
+
+        .flow {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flow-item {
+            display: flex;
+            gap: 14px;
+            padding: 0 0 22px;
+            position: relative;
+        }
+
+        .flow-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .flow-item::after {
+            content: "";
+            position: absolute;
+            left: 12px;
+            top: 28px;
+            bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .flow-item:last-child::after {
+            display: none;
+        }
+
+        .num {
+            flex: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 1px solid var(--c-formal);
+            color: var(--c-formal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            background: var(--bg);
+        }
+
+        .flow-item h3 {
+            margin: 1px 0 5px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .flow-item ul {
+            margin: 0;
+            padding-left: 16px;
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .flow-item ul li {
+            margin-bottom: 2px;
+        }
+
+        .chip-cluster {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 6px 0 4px;
+        }
+
+        .chip-cluster span {
+            border-radius: 999px;
+            padding: 9px 16px;
+            font-size: 0.86rem;
+            font-weight: 500;
+        }
+
+        .tbl-scroll {
+            overflow-x: auto;
+            margin-top: 6px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 520px;
+            font-size: 0.82rem;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: var(--bg);
+        }
+
+        td {
+            color: var(--ink);
+        }
+
+        .tbl-title {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin: 22px 0 8px;
+        }
+
+        .tbl-title:first-child {
+            margin-top: 0;
+        }
+
+        footer {
+            padding: 32px 24px 44px;
+            text-align: center;
+            color: var(--muted);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+        }
+
+        .nav-pill a.active {
+            background: var(--ink);
+            color: var(--bg);
+        }
+
+        .reflect {
+            border: 1px dashed var(--border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .reflect b {
+            color: var(--ink);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .backtotop {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--ink);
+            color: var(--bg);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+            z-index: 20;
+        }
+
+        .backtotop.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="nav">
-  <nav class="nav-pill">
-    <a href="#definisi">Definisi</a>
-    <a href="#ragam">Ragam</a>
-    <a href="#ideal">Ideal</a>
-    <a href="#formal">Formal</a>
-    <a href="#filosofis">Filosofis</a>
-    <a href="#praktis">Praktis</a>
-    <a href="#taksonomi">Taksonomi</a>
-  </nav>
-</div>
-
-<div class="wrap hero">
-  <span class="eyebrow">Modul Resmi · Tujuan Pembelajaran Bahasa Arab (PBA)</span>
-  <h1>Kerangka Teori Tujuan PBA</h1>
-  <p>Rangkuman dari modul dosen: definisi tujuan, empat ragam tujuan PBA, hingga taksonomi capaian pembelajaran — sebagai rujukan teori sebelum melihat temuan lapangan.</p>
-
-  <div style="border:1px solid var(--border); border-radius:14px; padding:16px 18px; margin-bottom:8px; background:var(--bg-alt); font-size:0.86rem; color:var(--muted);">
-    <div style="margin-bottom:8px;"><span style="font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; color:var(--ink);">Kelompok</span><br>Ahmad Kiflan Wafi &middot; Pahlevi Bobby &middot; Ghifari Dilan</div>
-    <div><span style="font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; color:var(--ink);">Dosen Pengampu</span><br>Khabibie Muhammad Luhfi</div>
-  </div>
-</div>
-
-<main class="wrap">
-
-  <section id="definisi" class="sec">
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-badge" style="background:var(--c-neutral-soft); color:var(--c-neutral);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V6a2 2 0 0 1 2-2h11a1 1 0 0 1 1 1v13"/><path d="M6.5 22H20a1 1 0 0 0 1-1v-2H6.5a1.5 1.5 0 0 0 0 3z"/></svg>
-        </div>
-        <div>
-          <span class="tag">Landasan</span>
-          <h2>Definisi Tujuan PBA</h2>
-        </div>
-      </div>
-      <p class="sub">Sebelum masuk ke ragam-ragamnya, modul menegaskan kenapa tujuan harus ada lebih dulu sebelum praktik pembelajaran berjalan.</p>
-      <div class="quote-grid">
-        <div class="quote">Tujuan adalah hasil, arah, haluan, harapan, atau sasaran yang ingin atau akan dicapai dalam proses pembelajaran bahasa Arab.<cite>Ainin, 2020</cite></div>
-        <div class="quote">Adalah suatu yang logis bahwa pendidikan itu harus dimulai dengan tujuan, yang diasumsikan sebagai nilai. Tanpa sadar tujuan, praktik pembelajaran tidak ada artinya.<cite>Moore, 1974</cite></div>
-      </div>
+    <div class="nav">
+        <nav class="nav-pill">
+            <a href="#definisi">Definisi</a>
+            <a href="#ragam">Ragam</a>
+            <a href="#ideal">Ideal</a>
+            <a href="#formal">Formal</a>
+            <a href="#filosofis">Filosofis</a>
+            <a href="#praktis">Praktis</a>
+            <a href="#taksonomi">Taksonomi</a>
+        </nav>
     </div>
-  </section>
 
-  <section id="ragam" class="sec">
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-badge" style="background:var(--c-neutral-soft); color:var(--c-neutral);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+    <div class="wrap hero">
+        <span class="eyebrow">Modul Resmi · Tujuan Pembelajaran Bahasa Arab (PBA)</span>
+        <h1>Kerangka Teori Tujuan PBA</h1>
+        <p>Rangkuman dari modul dosen: definisi tujuan, empat ragam tujuan PBA, hingga taksonomi capaian pembelajaran —
+            sebagai rujukan teori sebelum melihat temuan lapangan.</p>
+
+        <div
+            style="border:1px solid var(--border); border-radius:14px; padding:16px 18px; margin-bottom:8px; background:var(--bg-alt); font-size:0.86rem; color:var(--muted);">
+            <div style="margin-bottom:8px;"><span
+                    style="font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; color:var(--ink);">Kelompok</span><br>Ahmad
+                Kiflan Wafi &middot; Pahlevi Bobby &middot; Ghifari Dilan</div>
+            <div><span
+                    style="font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; color:var(--ink);">Dosen
+                    Pengampu</span><br>Khabibie Muhammad Luhfi</div>
         </div>
-        <div>
-          <span class="tag">Peta Besar</span>
-          <h2>Empat Ragam Tujuan PBA</h2>
-        </div>
-      </div>
-      <p class="sub">Tujuan PBA bisa dilihat dari empat sudut pandang berbeda — masing-masing dibahas mendalam di section berikutnya.</p>
-      <div class="quad-grid">
-        <div class="quad"><b><span class="dot" style="background:var(--c-ideal)"></span>Ideal</b><p>Ditinjau dari karakter ilmu yang dipelajari.</p></div>
-        <div class="quad"><b><span class="dot" style="background:var(--c-formal)"></span>Formal</b><p>Ditinjau dari hierarki sistem/lembaga yang menaungi.</p></div>
-        <div class="quad"><b><span class="dot" style="background:var(--c-filosofis)"></span>Filosofis</b><p>Ditinjau dari pandangan hidup dari sesuatu yang dipelajari.</p></div>
-        <div class="quad"><b><span class="dot" style="background:var(--c-praktis)"></span>Praktis</b><p>Ditinjau dari calon pengguna lulusan peserta didik.</p></div>
-      </div>
     </div>
-  </section>
 
-  <section id="ideal" class="sec">
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-badge" style="background:var(--c-ideal-soft); color:var(--c-ideal);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
-        </div>
-        <div>
-          <span class="tag">Tujuan Ideal</span>
-          <h2>Dari karakter Bahasa dan Pendidikan</h2>
-        </div>
-      </div>
-      <p class="sub">Bercabang jadi dua sisi: sisi kebahasaan dan sisi kependidikan, masing-masing dengan turunannya.</p>
-      <div class="branch">
-        <div class="branch-box"><h4>Bahasa</h4><ul><li>Kompetensi komunikatif</li><li>Kompetensi kritis</li></ul></div>
-        <div class="branch-box"><h4>Pendidikan</h4><ul><li>Kognitif</li><li>Psikomotorik</li><li>Afektif</li></ul></div>
-      </div>
-      <div class="branch">
-        <div class="branch-box"><h4>Linguistik</h4><ul><li>Mikro: aswat, sarf, nahw, dalalah</li><li>Makro: sosiolinguistik, psikolinguistik, antropolinguistik, stilistika</li></ul></div>
-        <div class="branch-box"><h4>Berbahasa</h4><ul><li>Reseptif: mendengar, membaca</li><li>Produksi: berbicara, menulis</li><li>Reseptif-produktif: menerjemah</li></ul></div>
-      </div>
-      <div class="branch-box" style="margin-bottom:0;"><h4>Berpikir Kritis</h4><ul><li>Ilmu untuk memahami</li><li>Menciptakan realitas</li><li>Strategik</li></ul></div>
-      <p class="sub" style="margin:16px 0 0;">Ketiganya (linguistik, berbahasa, berpikir kritis) bermuara menjadi satu kompetensi utuh: <b>kompetensi komunikatif–kritis</b>.</p>
-      <div class="reflect"><b>Coba pikirkan</b>Dari dua sisi Bahasa dan Pendidikan, menurutmu mana yang lebih mudah diukur gurunya sehari-hari?</div>
-    </div>
-  </section>
+    <main class="wrap">
 
-  <section id="formal" class="sec">
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-badge" style="background:var(--c-formal-soft); color:var(--c-formal);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16"/><path d="M5 21V10"/><path d="M19 21V10"/><path d="M3 10l9-6 9 6"/><path d="M9 21v-7"/><path d="M15 21v-7"/></svg>
-        </div>
-        <div>
-          <span class="tag">Tujuan Formal</span>
-          <h2>Hierarki Nasional sampai Instruksional</h2>
-        </div>
-      </div>
-      <p class="sub">Tujuan formal mengalir dari kebijakan negara sampai indikator harian di kelas.</p>
-      <div class="flow">
-        <div class="flow-item"><div class="num">1</div><div><h3>Nasional</h3><ul><li>Negara: Pancasila, UUD, UU, Kemenristekdikti, Kemenag</li><li>Jangka panjang</li><li>K13, Kurikulum Merdeka, dll.</li><li>Kurikulum khusus PBA</li></ul></div></div>
-        <div class="flow-item"><div class="num">2</div><div><h3>Institusional</h3><ul><li>Lembaga pendidikan: sekolah/madrasah</li><li>Jangka menengah/antara</li><li>Profil lulusan</li><li>Kompetensi peserta didik — komunikatif-kritis</li></ul></div></div>
-        <div class="flow-item"><div class="num">3</div><div><h3>Kurikuler</h3><ul><li>Berlaku per jenjang/fase kelas (1AB, 2AB, dst.)</li><li>Jangka menengah-pendek, oleh pendidik</li><li>Bidang studi: Bahasa Arab</li><li>Silabus/ATP, RPP, KI/CP</li></ul></div></div>
-        <div class="flow-item"><div class="num">4</div><div><h3>Instruksional</h3><ul><li>Di kelas pembelajaran</li><li>Oleh pendidik langsung ke siswa</li><li>Jangka pendek</li><li>KD/TP dan indikator</li></ul></div></div>
-      </div>
-      <div class="reflect"><b>Coba pikirkan</b>Kalau kebijakan nasional berubah, level mana yang paling cepat terdampak: institusional, kurikuler, atau instruksional?</div>
-    </div>
-  </section>
+        <section id="definisi" class="sec">
+            <div class="card">
+                <div class="card-head">
+                    <div class="icon-badge" style="background:var(--c-neutral-soft); color:var(--c-neutral);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5V6a2 2 0 0 1 2-2h11a1 1 0 0 1 1 1v13" />
+                            <path d="M6.5 22H20a1 1 0 0 0 1-1v-2H6.5a1.5 1.5 0 0 0 0 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="tag">Landasan</span>
+                        <h2>Definisi Tujuan PBA</h2>
+                    </div>
+                </div>
+                <p class="sub">Sebelum masuk ke ragam-ragamnya, modul menegaskan kenapa tujuan harus ada lebih dulu
+                    sebelum praktik pembelajaran berjalan.</p>
+                <div class="quote-grid">
+                    <div class="quote">Tujuan adalah hasil, arah, haluan, harapan, atau sasaran yang ingin atau akan
+                        dicapai dalam proses pembelajaran bahasa Arab.<cite>Ainin, 2020</cite></div>
+                    <div class="quote">Adalah suatu yang logis bahwa pendidikan itu harus dimulai dengan tujuan, yang
+                        diasumsikan sebagai nilai. Tanpa sadar tujuan, praktik pembelajaran tidak ada
+                        artinya.<cite>Moore, 1974</cite></div>
+                </div>
+            </div>
+        </section>
 
-  <section id="filosofis" class="sec">
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-badge" style="background:var(--c-filosofis-soft); color:var(--c-filosofis);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="14.5 9.5 13.2 13.2 9.5 14.5 10.8 10.8 14.5 9.5"/></svg>
-        </div>
-        <div>
-          <span class="tag">Tujuan Filosofis</span>
-          <h2>Empat elemen pandangan hidup</h2>
-        </div>
-      </div>
-      <p class="sub">Menurut modul, keempat elemen ini saling terhubung dan memengaruhi satu sama lain.</p>
-      <div class="chip-cluster">
-        <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Struktur</span>
-        <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Alat berpikir, mempengaruhi</span>
-        <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Memahami Islam</span>
-        <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Kemahiran</span>
-      </div>
-      <div class="reflect"><b>Coba pikirkan</b>Dari empat elemen ini, mana yang menurutmu paling sering terlewat dalam praktik mengajar sehari-hari?</div>
-    </div>
-  </section>
+        <section id="ragam" class="sec">
+            <div class="card">
+                <div class="card-head">
+                    <div class="icon-badge" style="background:var(--c-neutral-soft); color:var(--c-neutral);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M12 3v18M3 12h18" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="tag">Peta Besar</span>
+                        <h2>Empat Ragam Tujuan PBA</h2>
+                    </div>
+                </div>
+                <p class="sub">Tujuan PBA bisa dilihat dari empat sudut pandang berbeda — masing-masing dibahas mendalam
+                    di section berikutnya.</p>
+                <div class="quad-grid">
+                    <div class="quad"><b><span class="dot" style="background:var(--c-ideal)"></span>Ideal</b>
+                        <p>Ditinjau dari karakter ilmu yang dipelajari.</p>
+                    </div>
+                    <div class="quad"><b><span class="dot" style="background:var(--c-formal)"></span>Formal</b>
+                        <p>Ditinjau dari hierarki sistem/lembaga yang menaungi.</p>
+                    </div>
+                    <div class="quad"><b><span class="dot" style="background:var(--c-filosofis)"></span>Filosofis</b>
+                        <p>Ditinjau dari pandangan hidup dari sesuatu yang dipelajari.</p>
+                    </div>
+                    <div class="quad"><b><span class="dot" style="background:var(--c-praktis)"></span>Praktis</b>
+                        <p>Ditinjau dari calon pengguna lulusan peserta didik.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <section id="praktis" class="sec">
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-badge" style="background:var(--c-praktis-soft); color:var(--c-praktis);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7.5" width="19" height="13" rx="2.2"/><path d="M8.5 7.5V5.8a1.8 1.8 0 0 1 1.8-1.8h3.4a1.8 1.8 0 0 1 1.8 1.8v1.7"/><path d="M2.5 13h19"/></svg>
-        </div>
-        <div>
-          <span class="tag">Tujuan Praktis</span>
-          <h2>Gambaran arah lulusan PBA</h2>
-        </div>
-      </div>
-      <p class="sub">Ditinjau dari peran atau profesi yang bisa dituju calon lulusan program bahasa Arab.</p>
-      <div class="chip-cluster">
-        <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">Diploma</span>
-        <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">Guru</span>
-        <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">Penerjemah</span>
-        <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">Pemandu Wisata</span>
-        <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">TKW Profesional</span>
-      </div>
-      <div class="reflect"><b>Coba pikirkan</b>Dari lima arah lulusan ini, profesi mana yang paling relevan dengan konteks sekolah dasar/madrasah ibtidaiyah?</div>
-    </div>
-  </section>
+        <section id="ideal" class="sec">
+            <div class="card">
+                <div class="card-head">
+                    <div class="icon-badge" style="background:var(--c-ideal-soft); color:var(--c-ideal);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <circle cx="12" cy="12" r="5" />
+                            <circle cx="12" cy="12" r="1" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="tag">Tujuan Ideal</span>
+                        <h2>Dari karakter Bahasa dan Pendidikan</h2>
+                    </div>
+                </div>
+                <p class="sub">Bercabang jadi dua sisi: sisi kebahasaan dan sisi kependidikan, masing-masing dengan
+                    turunannya.</p>
+                <div class="branch">
+                    <div class="branch-box">
+                        <h4>Bahasa</h4>
+                        <ul>
+                            <li>Kompetensi komunikatif</li>
+                            <li>Kompetensi kritis</li>
+                        </ul>
+                    </div>
+                    <div class="branch-box">
+                        <h4>Pendidikan</h4>
+                        <ul>
+                            <li>Kognitif</li>
+                            <li>Psikomotorik</li>
+                            <li>Afektif</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="branch">
+                    <div class="branch-box">
+                        <h4>Linguistik</h4>
+                        <ul>
+                            <li>Mikro: aswat, sarf, nahw, dalalah</li>
+                            <li>Makro: sosiolinguistik, psikolinguistik, antropolinguistik, stilistika</li>
+                        </ul>
+                    </div>
+                    <div class="branch-box">
+                        <h4>Berbahasa</h4>
+                        <ul>
+                            <li>Reseptif: mendengar, membaca</li>
+                            <li>Produksi: berbicara, menulis</li>
+                            <li>Reseptif-produktif: menerjemah</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="branch-box" style="margin-bottom:0;">
+                    <h4>Berpikir Kritis</h4>
+                    <ul>
+                        <li>Ilmu untuk memahami</li>
+                        <li>Menciptakan realitas</li>
+                        <li>Strategik</li>
+                    </ul>
+                </div>
+                <p class="sub" style="margin:16px 0 0;">Ketiganya (linguistik, berbahasa, berpikir kritis) bermuara
+                    menjadi satu kompetensi utuh: <b>kompetensi komunikatif–kritis</b>.</p>
+                <div class="reflect"><b>Coba pikirkan</b>Dari dua sisi Bahasa dan Pendidikan, menurutmu mana yang lebih
+                    mudah diukur gurunya sehari-hari?</div>
+            </div>
+        </section>
 
-  <section id="taksonomi" class="sec">
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-badge" style="background:var(--c-neutral-soft); color:var(--c-neutral);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg>
-        </div>
-        <div>
-          <span class="tag">Taksonomi Capaian</span>
-          <h2>Bloom &amp; Vallete–Disick</h2>
-        </div>
-      </div>
-      <p class="sub">Dua kerangka yang dipakai untuk menilai capaian pembelajaran, dari ranah umum sampai tahapan rinci.</p>
+        <section id="formal" class="sec">
+            <div class="card">
+                <div class="card-head">
+                    <div class="icon-badge" style="background:var(--c-formal-soft); color:var(--c-formal);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 21h16" />
+                            <path d="M5 21V10" />
+                            <path d="M19 21V10" />
+                            <path d="M3 10l9-6 9 6" />
+                            <path d="M9 21v-7" />
+                            <path d="M15 21v-7" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="tag">Tujuan Formal</span>
+                        <h2>Hierarki Nasional sampai Instruksional</h2>
+                    </div>
+                </div>
+                <p class="sub">Tujuan formal mengalir dari kebijakan negara sampai indikator harian di kelas.</p>
+                <div class="flow">
+                    <div class="flow-item">
+                        <div class="num">1</div>
+                        <div>
+                            <h3>Nasional</h3>
+                            <ul>
+                                <li>Negara: Pancasila, UUD, UU, Kemenristekdikti, Kemenag</li>
+                                <li>Jangka panjang</li>
+                                <li>K13, Kurikulum Merdeka, dll.</li>
+                                <li>Kurikulum khusus PBA</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flow-item">
+                        <div class="num">2</div>
+                        <div>
+                            <h3>Institusional</h3>
+                            <ul>
+                                <li>Lembaga pendidikan: sekolah/madrasah</li>
+                                <li>Jangka menengah/antara</li>
+                                <li>Profil lulusan</li>
+                                <li>Kompetensi peserta didik — komunikatif-kritis</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flow-item">
+                        <div class="num">3</div>
+                        <div>
+                            <h3>Kurikuler</h3>
+                            <ul>
+                                <li>Berlaku per jenjang/fase kelas (1AB, 2AB, dst.)</li>
+                                <li>Jangka menengah-pendek, oleh pendidik</li>
+                                <li>Bidang studi: Bahasa Arab</li>
+                                <li>Silabus/ATP, RPP, KI/CP</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flow-item">
+                        <div class="num">4</div>
+                        <div>
+                            <h3>Instruksional</h3>
+                            <ul>
+                                <li>Di kelas pembelajaran</li>
+                                <li>Oleh pendidik langsung ke siswa</li>
+                                <li>Jangka pendek</li>
+                                <li>KD/TP dan indikator</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="reflect"><b>Coba pikirkan</b>Kalau kebijakan nasional berubah, level mana yang paling cepat
+                    terdampak: institusional, kurikuler, atau instruksional?</div>
+            </div>
+        </section>
 
-      <p class="tbl-title">Taksonomi Bloom sebagai Tujuan PBA</p>
-      <div class="tbl-scroll">
-        <table>
-          <tr><th>Domain</th><th>Tahapan</th></tr>
-          <tr><td>Kognitif</td><td>Pengetahuan, Aplikasi, Analisis, Sintesis, Evaluasi</td></tr>
-          <tr><td>Afektif</td><td>Penerimaan, Tanggapan, Penghargaan, Pengorganisasian, Karakterisasi berdasarkan nilai</td></tr>
-          <tr><td>Psikomotorik</td><td>Persepsi, Kesiapan, Respon terpimpin, Mekanisme, Respon kompleks, Penyesuaian, Penciptaan</td></tr>
-        </table>
-      </div>
+        <section id="filosofis" class="sec">
+            <div class="card">
+                <div class="card-head">
+                    <div class="icon-badge" style="background:var(--c-filosofis-soft); color:var(--c-filosofis);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <polygon points="14.5 9.5 13.2 13.2 9.5 14.5 10.8 10.8 14.5 9.5" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="tag">Tujuan Filosofis</span>
+                        <h2>Empat elemen pandangan hidup</h2>
+                    </div>
+                </div>
+                <p class="sub">Menurut modul, keempat elemen ini saling terhubung dan memengaruhi satu sama lain.</p>
+                <div class="chip-cluster">
+                    <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Struktur</span>
+                    <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Alat berpikir,
+                        mempengaruhi</span>
+                    <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Memahami Islam</span>
+                    <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Kemahiran</span>
+                </div>
+                <div class="reflect"><b>Coba pikirkan</b>Dari empat elemen ini, mana yang menurutmu paling sering
+                    terlewat dalam praktik mengajar sehari-hari?</div>
+            </div>
+        </section>
 
-      <p class="tbl-title">Taksonomi Vallete dan Disick — A. Kognitif-Psikomotorik</p>
-      <div class="tbl-scroll">
-        <table>
-          <tr><th>Tahap</th><th>Internal</th><th>Eksternal</th><th>Ilustrasi</th></tr>
-          <tr><td>Keterampilan mekanikal</td><td>Persepsi</td><td>Reproduksi</td><td>A=A (meniru)</td></tr>
-          <tr><td>Pengetahuan</td><td>Rekognisi/pengenalan</td><td>Pengulangan</td><td>A=A (tahu)</td></tr>
-          <tr><td>Pengalihan</td><td>Penerimaan</td><td>Penerapan</td><td>A=A1, A2, A3</td></tr>
-          <tr><td>Komunikasi</td><td>Pemahaman</td><td>Pengungkapan</td><td>A=A,B,C konteks asli</td></tr>
-          <tr><td>Kritik</td><td>Analisis/evaluasi</td><td>Sintesis</td><td>A=A,B,C, mengkritisi</td></tr>
-        </table>
-      </div>
+        <section id="praktis" class="sec">
+            <div class="card">
+                <div class="card-head">
+                    <div class="icon-badge" style="background:var(--c-praktis-soft); color:var(--c-praktis);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2.5" y="7.5" width="19" height="13" rx="2.2" />
+                            <path d="M8.5 7.5V5.8a1.8 1.8 0 0 1 1.8-1.8h3.4a1.8 1.8 0 0 1 1.8 1.8v1.7" />
+                            <path d="M2.5 13h19" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="tag">Tujuan Praktis</span>
+                        <h2>Gambaran arah lulusan PBA</h2>
+                    </div>
+                </div>
+                <p class="sub">Ditinjau dari peran atau profesi yang bisa dituju calon lulusan program bahasa Arab.</p>
+                <div class="chip-cluster">
+                    <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">Diploma</span>
+                    <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">Guru</span>
+                    <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">Penerjemah</span>
+                    <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">Pemandu Wisata</span>
+                    <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">TKW Profesional</span>
+                </div>
+                <div class="reflect"><b>Coba pikirkan</b>Dari lima arah lulusan ini, profesi mana yang paling relevan
+                    dengan konteks sekolah dasar/madrasah ibtidaiyah?</div>
+            </div>
+        </section>
 
-      <p class="tbl-title">Taksonomi Vallete dan Disick — B. Afektif</p>
-      <div class="tbl-scroll">
-        <table>
-          <tr><th>Tahap</th><th>Internal</th><th>Eksternal</th></tr>
-          <tr><td>Penerimaan</td><td>Kesadaran</td><td>Keperhatian</td></tr>
-          <tr><td>Penjawaban</td><td>Tenggang rasa</td><td>Ketertarikan</td></tr>
-          <tr><td>Apresiasi</td><td>Penilaian</td><td>Pelibatan</td></tr>
-          <tr><td>Internalisasi</td><td>Konseptualisasi</td><td>Keterikatan</td></tr>
-          <tr><td>Karakterisasi</td><td>Integrasi</td><td>Kepemimpinan</td></tr>
-        </table>
-      </div>
-    </div>
-  </section>
+        <section id="taksonomi" class="sec">
+            <div class="card">
+                <div class="card-head">
+                    <div class="icon-badge" style="background:var(--c-neutral-soft); color:var(--c-neutral);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 3v18h18" />
+                            <path d="M7 15l4-6 4 3 5-8" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="tag">Taksonomi Capaian</span>
+                        <h2>Bloom &amp; Vallete–Disick</h2>
+                    </div>
+                </div>
+                <p class="sub">Dua kerangka yang dipakai untuk menilai capaian pembelajaran, dari ranah umum sampai
+                    tahapan rinci.</p>
 
-</main>
+                <p class="tbl-title">Taksonomi Bloom sebagai Tujuan PBA</p>
+                <div class="tbl-scroll">
+                    <table>
+                        <tr>
+                            <th>Domain</th>
+                            <th>Tahapan</th>
+                        </tr>
+                        <tr>
+                            <td>Kognitif</td>
+                            <td>Pengetahuan, Aplikasi, Analisis, Sintesis, Evaluasi</td>
+                        </tr>
+                        <tr>
+                            <td>Afektif</td>
+                            <td>Penerimaan, Tanggapan, Penghargaan, Pengorganisasian, Karakterisasi berdasarkan nilai
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Psikomotorik</td>
+                            <td>Persepsi, Kesiapan, Respon terpimpin, Mekanisme, Respon kompleks, Penyesuaian,
+                                Penciptaan</td>
+                        </tr>
+                    </table>
+                </div>
 
-<footer>
-  Disusun berdasarkan modul resmi Tujuan Pembelajaran Bahasa Arab dari dosen pengampu.
-  <br><br>
-  <a href="https://claude.ai/artifact/TnE8prhtrgbA7KwpoYHSnD" style="display:inline-block; border:1px solid var(--border-strong); color:var(--ink); border-radius:999px; padding:8px 16px; text-decoration:none;">Lihat temuan wawancara →</a>
-</footer>
+                <p class="tbl-title">Taksonomi Vallete dan Disick — A. Kognitif-Psikomotorik</p>
+                <div class="tbl-scroll">
+                    <table>
+                        <tr>
+                            <th>Tahap</th>
+                            <th>Internal</th>
+                            <th>Eksternal</th>
+                            <th>Ilustrasi</th>
+                        </tr>
+                        <tr>
+                            <td>Keterampilan mekanikal</td>
+                            <td>Persepsi</td>
+                            <td>Reproduksi</td>
+                            <td>A=A (meniru)</td>
+                        </tr>
+                        <tr>
+                            <td>Pengetahuan</td>
+                            <td>Rekognisi/pengenalan</td>
+                            <td>Pengulangan</td>
+                            <td>A=A (tahu)</td>
+                        </tr>
+                        <tr>
+                            <td>Pengalihan</td>
+                            <td>Penerimaan</td>
+                            <td>Penerapan</td>
+                            <td>A=A1, A2, A3</td>
+                        </tr>
+                        <tr>
+                            <td>Komunikasi</td>
+                            <td>Pemahaman</td>
+                            <td>Pengungkapan</td>
+                            <td>A=A,B,C konteks asli</td>
+                        </tr>
+                        <tr>
+                            <td>Kritik</td>
+                            <td>Analisis/evaluasi</td>
+                            <td>Sintesis</td>
+                            <td>A=A,B,C, mengkritisi</td>
+                        </tr>
+                    </table>
+                </div>
 
-<button class="backtotop" id="backtotop" aria-label="Kembali ke atas">
-  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
+                <p class="tbl-title">Taksonomi Vallete dan Disick — B. Afektif</p>
+                <div class="tbl-scroll">
+                    <table>
+                        <tr>
+                            <th>Tahap</th>
+                            <th>Internal</th>
+                            <th>Eksternal</th>
+                        </tr>
+                        <tr>
+                            <td>Penerimaan</td>
+                            <td>Kesadaran</td>
+                            <td>Keperhatian</td>
+                        </tr>
+                        <tr>
+                            <td>Penjawaban</td>
+                            <td>Tenggang rasa</td>
+                            <td>Ketertarikan</td>
+                        </tr>
+                        <tr>
+                            <td>Apresiasi</td>
+                            <td>Penilaian</td>
+                            <td>Pelibatan</td>
+                        </tr>
+                        <tr>
+                            <td>Internalisasi</td>
+                            <td>Konseptualisasi</td>
+                            <td>Keterikatan</td>
+                        </tr>
+                        <tr>
+                            <td>Karakterisasi</td>
+                            <td>Integrasi</td>
+                            <td>Kepemimpinan</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-<script>
-  const navLinks = document.querySelectorAll('.nav-pill a');
-  const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    </main>
 
-  function updateActiveNav() {
-    const offset = 90;
-    let currentId = sections[0] ? sections[0].id : null;
-    for (const sec of sections) {
-      if (sec.getBoundingClientRect().top - offset <= 0) currentId = sec.id;
-    }
-    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + currentId));
-  }
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => { updateActiveNav(); ticking = false; });
-      ticking = true;
-    }
-  });
-  updateActiveNav();
+    <footer>
+        Disusun berdasarkan modul resmi Tujuan Pembelajaran Bahasa Arab dari dosen pengampu.
+        <br><br>
+        <a href="https://ahmadkiflan.github.io/PBA_Tujuan_App/"
+            style="display:inline-block; border:1px solid var(--border-strong); color:var(--ink); border-radius:999px; padding:8px 16px; text-decoration:none;">Lihat
+            temuan wawancara →</a>
+    </footer>
 
-  const btt = document.getElementById('backtotop');
-  window.addEventListener('scroll', () => {
-    btt.classList.toggle('show', window.scrollY > 480);
-  });
-  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-</script>
+    <button class="backtotop" id="backtotop" aria-label="Kembali ke atas">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+
+    <script>
+        const navLinks = document.querySelectorAll('.nav-pill a');
+        const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+        function updateActiveNav() {
+            const offset = 90;
+            let currentId = sections[0] ? sections[0].id : null;
+            for (const sec of sections) {
+                if (sec.getBoundingClientRect().top - offset <= 0) currentId = sec.id;
+            }
+            navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + currentId));
+        }
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => { updateActiveNav(); ticking = false; });
+                ticking = true;
+            }
+        });
+        updateActiveNav();
+
+        const btt = document.getElementById('backtotop');
+        window.addEventListener('scroll', () => {
+            btt.classList.toggle('show', window.scrollY > 480);
+        });
+        btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
 
 </body>
+
 </html>

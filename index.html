@@ -89,15 +89,17 @@
             z-index: 10;
             padding: 14px 16px;
             background: var(--bg);
+            border-bottom: 1px solid var(--border);
         }
 
         .nav-bar {
-            max-width: 760px;
+            max-width: 800px;
             margin: 0 auto;
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            gap: 12px;
         }
 
         .nav-menu {
@@ -110,7 +112,7 @@
             justify-content: center;
             gap: 8px;
             border: 1px solid var(--border);
-            border-radius: 0.8rem;
+            border-radius: 999px;
             padding: 9px 16px;
             background: var(--bg);
             font-family: var(--font-mono);
@@ -153,10 +155,6 @@
         }
 
         .theme-toggle {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
             flex: none;
             width: 38px;
             height: 38px;
@@ -176,17 +174,6 @@
         }
 
         @media (max-width:680px) {
-            .nav-bar {
-                justify-content: space-between;
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            .theme-toggle {
-                position: static;
-                transform: none;
-            }
-
             .nav-toggle {
                 display: flex;
             }
@@ -284,22 +271,65 @@
             z-index: 50;
         }
 
-        section.sec {
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity .6s ease, transform .6s ease;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
         }
 
-        section.sec.in {
-            opacity: 1;
-            transform: none;
+        section.sec {
+            animation: fadeInUp .5s ease both;
+        }
+
+        section.sec:nth-of-type(2) {
+            animation-delay: .05s;
+        }
+
+        section.sec:nth-of-type(3) {
+            animation-delay: .1s;
+        }
+
+        section.sec:nth-of-type(4) {
+            animation-delay: .15s;
+        }
+
+        section.sec:nth-of-type(5) {
+            animation-delay: .2s;
+        }
+
+        section.sec:nth-of-type(6) {
+            animation-delay: .25s;
+        }
+
+        section.sec:nth-of-type(7) {
+            animation-delay: .3s;
         }
 
         @media (prefers-reduced-motion: reduce) {
             section.sec {
-                transition: none;
+                animation: none;
                 opacity: 1;
                 transform: none;
+            }
+        }
+
+        @media (min-width:900px) {
+            .wrap {
+                max-width: 800px;
+            }
+
+            .card {
+                padding: 36px;
+            }
+
+            .hero h1 {
+                font-size: 2.9rem;
             }
         }
 
@@ -650,11 +680,9 @@
             <div class="nav-menu">
                 <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Buka menu navigasi">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <line x1="4" y1="7" x2="20" y2="7" />
-                        <line x1="4" y1="12" x2="20" y2="12" />
-                        <line x1="4" y1="17" x2="20" y2="17" />
+                        <line x1="4" y1="8" x2="20" y2="8" />
+                        <line x1="4" y1="16" x2="20" y2="16" />
                     </svg>
-
                 </button>
                 <nav class="nav-pill" id="navPill">
                     <a href="#definisi">Definisi</a>
@@ -705,13 +733,16 @@
                     </div>
                 </div>
                 <p class="sub">Sebelum masuk ke ragam-ragamnya, modul menegaskan kenapa tujuan harus ada lebih dulu
-                    sebelum praktik pembelajaran berjalan.</p>
+                    sebelum
+                    praktik pembelajaran berjalan.</p>
                 <div class="quote-grid">
                     <div class="quote">Tujuan adalah hasil, arah, haluan, harapan, atau sasaran yang ingin atau akan
-                        dicapai dalam proses pembelajaran bahasa Arab.<cite>Ainin, 2020</cite></div>
+                        dicapai dalam
+                        proses pembelajaran bahasa Arab.<cite>Ainin, 2020</cite></div>
                     <div class="quote">Adalah suatu yang logis bahwa pendidikan itu harus dimulai dengan tujuan, yang
-                        diasumsikan sebagai nilai. Tanpa sadar tujuan, praktik pembelajaran tidak ada
-                        artinya.<cite>Moore, 1974</cite></div>
+                        diasumsikan
+                        sebagai nilai. Tanpa sadar tujuan, praktik pembelajaran tidak ada artinya.<cite>Moore,
+                            1974</cite></div>
                 </div>
             </div>
         </section>
@@ -732,7 +763,8 @@
                     </div>
                 </div>
                 <p class="sub">Tujuan PBA bisa dilihat dari empat sudut pandang berbeda — masing-masing dibahas mendalam
-                    di section berikutnya.</p>
+                    di
+                    section berikutnya.</p>
                 <div class="quad-grid">
                     <div class="quad"><b><span class="dot" style="background:var(--c-ideal)"></span>Ideal</b>
                         <p>Ditinjau dari karakter ilmu yang dipelajari.</p>
@@ -767,7 +799,8 @@
                     </div>
                 </div>
                 <p class="sub">Bercabang jadi dua sisi: sisi kebahasaan dan sisi kependidikan, masing-masing dengan
-                    turunannya.</p>
+                    turunannya.
+                </p>
                 <div class="branch">
                     <div class="branch-box">
                         <h4>Bahasa</h4>
@@ -811,9 +844,11 @@
                     </ul>
                 </div>
                 <p class="sub" style="margin:16px 0 0;">Ketiganya (linguistik, berbahasa, berpikir kritis) bermuara
-                    menjadi satu kompetensi utuh: <b>kompetensi komunikatif–kritis</b>.</p>
+                    menjadi satu
+                    kompetensi utuh: <b>kompetensi komunikatif–kritis</b>.</p>
                 <div class="reflect"><b>Coba pikirkan</b>Dari dua sisi Bahasa dan Pendidikan, menurutmu mana yang lebih
-                    mudah diukur gurunya sehari-hari?</div>
+                    mudah
+                    diukur gurunya sehari-hari?</div>
             </div>
         </section>
 
@@ -916,7 +951,8 @@
                     <span style="border:1px solid var(--c-filosofis); color:var(--c-filosofis);">Kemahiran</span>
                 </div>
                 <div class="reflect"><b>Coba pikirkan</b>Dari empat elemen ini, mana yang menurutmu paling sering
-                    terlewat dalam praktik mengajar sehari-hari?</div>
+                    terlewat dalam
+                    praktik mengajar sehari-hari?</div>
             </div>
         </section>
 
@@ -945,7 +981,8 @@
                     <span style="border:1px solid var(--c-praktis); color:var(--c-praktis);">TKW Profesional</span>
                 </div>
                 <div class="reflect"><b>Coba pikirkan</b>Dari lima arah lulusan ini, profesi mana yang paling relevan
-                    dengan konteks sekolah dasar/madrasah ibtidaiyah?</div>
+                    dengan
+                    konteks sekolah dasar/madrasah ibtidaiyah?</div>
             </div>
         </section>
 
@@ -965,7 +1002,8 @@
                     </div>
                 </div>
                 <p class="sub">Dua kerangka yang dipakai untuk menilai capaian pembelajaran, dari ranah umum sampai
-                    tahapan rinci.</p>
+                    tahapan
+                    rinci.</p>
 
                 <p class="tbl-title">Taksonomi Bloom sebagai Tujuan PBA</p>
                 <div class="tbl-scroll">
@@ -1160,18 +1198,6 @@
         updateProgressBar();
 
         // Reveal saat scroll
-        const revealEls = document.querySelectorAll('section.sec');
-        if ('IntersectionObserver' in window) {
-            const revealIO = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); } });
-            }, { threshold: 0.12 });
-            revealEls.forEach(el => revealIO.observe(el));
-        } else {
-            revealEls.forEach(el => el.classList.add('in'));
-        }
-        // Pengaman: pastikan semua konten tetap muncul meski observer gagal/tertunda
-        setTimeout(() => revealEls.forEach(el => el.classList.add('in')), 2500);
-
         const btt = document.getElementById('backtotop');
         window.addEventListener('scroll', () => {
             btt.classList.toggle('show', window.scrollY > 480);

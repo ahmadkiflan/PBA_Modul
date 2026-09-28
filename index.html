@@ -31,6 +31,17 @@
             --font-display: 'Space Grotesk', 'Inter', sans-serif;
             --font-body: 'Inter', 'Segoe UI', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
+            /* Skala tipografi fluid (satu skala, dipakai semua komponen, mobile -> desktop) */
+            --fs-display: clamp(2rem, 1.35rem + 2.8vw, 3.25rem);
+            --fs-h2: clamp(1.4rem, 1.15rem + 1vw, 1.75rem);
+            --fs-h3: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+            --fs-stat: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+            --fs-lede: clamp(1.02rem, 0.96rem + 0.3vw, 1.15rem);
+            --fs-body: clamp(0.94rem, 0.9rem + 0.2vw, 1.02rem);
+            --fs-small: clamp(0.86rem, 0.83rem + 0.15vw, 0.94rem);
+            --fs-caption: clamp(0.8rem, 0.78rem + 0.1vw, 0.86rem);
+            --fs-mono: clamp(0.74rem, 0.72rem + 0.1vw, 0.8rem);
+            --fs-micro: clamp(0.68rem, 0.66rem + 0.08vw, 0.74rem);
             box-sizing: border-box;
             padding-top: env(safe-area-inset-top, 0px);
             padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -67,6 +78,7 @@
 
         body {
             margin: 0;
+            font-size: var(--fs-body);
             background: var(--bg);
             color: var(--ink);
             font-family: var(--font-body);
@@ -117,22 +129,17 @@
             display: none;
             align-items: center;
             justify-content: center;
-            gap: 9px;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            padding: 9px 16px;
-            background: var(--bg);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
+            background: none;
+            border: none;
+            padding: 8px;
+            margin: -8px;
             color: var(--ink);
             cursor: pointer;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-            line-height: 1;
         }
 
         .hamburger {
             position: relative;
-            width: 15px;
+            width: 16px;
             height: 12px;
             flex: none;
         }
@@ -140,7 +147,7 @@
         .hamburger .bar {
             position: absolute;
             left: 0;
-            width: 15px;
+            width: 16px;
             height: 2px;
             background: currentColor;
             border-radius: 2px;
@@ -167,28 +174,52 @@
 
         .nav-pill {
             display: flex;
-            gap: 2px;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            padding: 6px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-            background: var(--bg);
+            gap: 16px;
+            position: relative;
         }
 
         .nav-pill a {
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: var(--fs-mono);
             text-decoration: none;
             color: var(--muted);
-            padding: 8px 11px;
-            border-radius: 999px;
+            padding: 8px 1px 10px;
             white-space: nowrap;
-            transition: background .2s ease, color .2s ease;
+            transition: color .2s ease;
+            position: relative;
         }
 
         .nav-pill a:hover {
-            background: var(--bg-alt);
             color: var(--ink);
+        }
+
+        .nav-pill a.active {
+            color: var(--ink);
+        }
+
+        .nav-indicator {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 2px;
+            background: var(--ink);
+            border-radius: 2px;
+            opacity: 0;
+            pointer-events: none;
+            transition: left .38s cubic-bezier(0.65, 0, 0.35, 1), width .38s cubic-bezier(0.65, 0, 0.35, 1), top .38s cubic-bezier(0.65, 0, 0.35, 1), background-color .38s ease, opacity .25s ease;
+        }
+
+        @keyframes dropIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
         }
 
         .theme-toggle {
@@ -229,27 +260,29 @@
                 display: flex;
             }
 
+            .nav-menu {
+                position: static;
+            }
+
             .nav-pill {
                 display: none;
                 position: absolute;
-                top: calc(100% + 8px);
+                top: calc(100% + 22px);
                 left: 0;
-                transform: none;
                 flex-direction: column;
-                min-width: 210px;
-                border-radius: 16px;
-                overflow: hidden;
-                padding: 6px;
+                align-items: flex-start;
+                gap: 2px;
+                min-width: 200px;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 12px 20px;
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
             }
 
             .nav-pill.open {
                 display: flex;
-            }
-
-            .nav-pill a {
-                text-align: left;
-                padding: 11px 14px;
-                border-radius: 10px;
+                animation: dropIn .22s ease;
             }
         }
 
@@ -260,7 +293,7 @@
         .eyebrow {
             display: inline-block;
             font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: var(--fs-mono);
             color: var(--muted);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -271,7 +304,7 @@
         .hero h1 {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: clamp(1.9rem, 5.5vw, 2.9rem);
+            font-size: var(--fs-display);
             line-height: 1.1;
             letter-spacing: -0.02em;
             margin: 0 0 16px;
@@ -279,7 +312,7 @@
 
         .hero p {
             color: var(--muted);
-            font-size: 1.02rem;
+            font-size: var(--fs-lede);
             max-width: 58ch;
             margin: 0 0 30px;
         }
@@ -405,10 +438,6 @@
             .card {
                 padding: 36px;
             }
-
-            .hero h1 {
-                font-size: 2.9rem;
-            }
         }
 
         .section-indicator {
@@ -416,7 +445,7 @@
             left: 18px;
             bottom: 18px;
             font-family: var(--font-mono);
-            font-size: 0.7rem;
+            font-size: var(--fs-micro);
             color: var(--muted);
             background: var(--bg);
             border: 1px solid var(--border);
@@ -450,7 +479,7 @@
         .tag {
             display: block;
             font-family: var(--font-mono);
-            font-size: 0.7rem;
+            font-size: var(--fs-mono);
             color: var(--muted);
             margin-bottom: 5px;
         }
@@ -458,8 +487,9 @@
         h2 {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            font-size: var(--fs-h2);
             letter-spacing: -0.01em;
+            line-height: 1.2;
             margin: 0 0 4px;
         }
 
@@ -467,7 +497,7 @@
             color: var(--muted);
             margin: 0 0 22px;
             max-width: 58ch;
-            font-size: 0.94rem;
+            font-size: var(--fs-body);
         }
 
         .quote-grid {
@@ -481,14 +511,14 @@
             padding: 18px 20px;
             background: var(--bg);
             font-style: italic;
-            font-size: 0.94rem;
+            font-size: var(--fs-body);
         }
 
         .quote cite {
             display: block;
             font-style: normal;
             font-family: var(--font-mono);
-            font-size: 0.7rem;
+            font-size: var(--fs-mono);
             color: var(--muted);
             margin-top: 10px;
         }
@@ -522,12 +552,12 @@
 
         .quad b {
             font-family: var(--font-display);
-            font-size: 1rem;
+            font-size: var(--fs-h3);
         }
 
         .quad p {
             margin: 6px 0 0;
-            font-size: 0.85rem;
+            font-size: var(--fs-small);
             color: var(--muted);
         }
 
@@ -553,14 +583,14 @@
 
         .branch-box h4 {
             margin: 0 0 10px;
-            font-size: 0.95rem;
+            font-size: var(--fs-h3);
             font-family: var(--font-display);
         }
 
         .branch-box ul {
             margin: 0;
             padding-left: 18px;
-            font-size: 0.88rem;
+            font-size: var(--fs-small);
             color: var(--muted);
         }
 
@@ -609,13 +639,13 @@
             align-items: center;
             justify-content: center;
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: var(--fs-micro);
             background: var(--bg);
         }
 
         .flow-item h3 {
             margin: 1px 0 5px;
-            font-size: 0.95rem;
+            font-size: var(--fs-h3);
             font-weight: 600;
         }
 
@@ -623,7 +653,7 @@
             margin: 0;
             padding-left: 16px;
             color: var(--muted);
-            font-size: 0.86rem;
+            font-size: var(--fs-small);
         }
 
         .flow-item ul li {
@@ -641,7 +671,7 @@
         .chip-cluster span {
             border-radius: 999px;
             padding: 9px 16px;
-            font-size: 0.86rem;
+            font-size: var(--fs-small);
             font-weight: 500;
         }
 
@@ -654,7 +684,7 @@
             border-collapse: collapse;
             width: 100%;
             min-width: 520px;
-            font-size: 0.82rem;
+            font-size: var(--fs-caption);
         }
 
         th,
@@ -667,7 +697,7 @@
 
         th {
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: var(--fs-micro);
             text-transform: uppercase;
             color: var(--muted);
             background: var(--bg);
@@ -679,7 +709,7 @@
 
         .tbl-title {
             font-family: var(--font-mono);
-            font-size: 0.7rem;
+            font-size: var(--fs-micro);
             color: var(--muted);
             text-transform: uppercase;
             margin: 22px 0 8px;
@@ -694,12 +724,7 @@
             text-align: center;
             color: var(--muted);
             font-family: var(--font-mono);
-            font-size: 0.72rem;
-        }
-
-        .nav-pill a.active {
-            background: var(--ink);
-            color: var(--bg);
+            font-size: var(--fs-mono);
         }
 
         .reflect {
@@ -707,14 +732,14 @@
             border-radius: 14px;
             padding: 16px 18px;
             margin-top: 20px;
-            font-size: 0.9rem;
+            font-size: var(--fs-small);
             color: var(--muted);
         }
 
         .reflect b {
             color: var(--ink);
             font-family: var(--font-mono);
-            font-size: 0.7rem;
+            font-size: var(--fs-micro);
             text-transform: uppercase;
             display: block;
             margin-bottom: 6px;
@@ -761,6 +786,7 @@
                     <span class="hamburger"><span class="bar bar1"></span><span class="bar bar2"></span></span>
                 </button>
                 <nav class="nav-pill" id="navPill">
+                    <span class="nav-indicator" id="navIndicator"></span>
                     <a href="#definisi">Definisi</a>
                     <a href="#ragam">Ragam</a>
                     <a href="#ideal">Ideal</a>
@@ -776,26 +802,20 @@
 
     <div class="wrap hero">
         <span class="eyebrow">Modul · Tujuan Pembelajaran Bahasa Arab</span>
-        <h1>Kerangka Teori Tujuan Pembelajaran Bahasa Arab</h1>
-        <p>Rangkuman dari modul dosen: definisi tujuan, empat ragam tujuan PBA, hingga taksonomi capaian pembelajaran —
+        <h1>Modul Kerangka Teori <br> Tujuan PBA</h1>
+        <p>Rangkuman dari modul dosen pengampu: definisi tujuan, empat ragam tujuan PBA, hingga taksonomi capaian
+            pembelajaran —
             sebagai rujukan teori sebelum melihat temuan lapangan.</p>
 
         <div
-            style="border:1px solid var(--border); border-radius:14px; padding:16px 18px; margin-bottom:8px; background:var(--bg-alt); font-size:0.86rem; color:var(--muted);">
+            style="border:1px solid var(--border); border-radius:14px; padding:16px 18px; margin-bottom:8px; background:var(--bg-alt); font-size:var(--fs-small); color:var(--muted);">
             <div style="margin-bottom:8px;"><span
-                    style="font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; color:var(--ink);">Kelompok</span><br>Ahmad
+                    style="font-family:var(--font-mono); font-size:var(--fs-micro); text-transform:uppercase; color:var(--ink);">Kelompok</span><br>Ahmad
                 Kiflan Wafi (B0522003)<br>Fahlevi Bobby Armyndo (B0523021)<br>
                 Ghifari Dilan Malikisyafa (B0523027)</div>
-            <div style="margin-bottom:8px;">
-                <span
-                    style="font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; color:var(--ink);">Dosen
-                    Pengampu</span><br>Dr. Khabibi Muhammad Luthfi, M.Hum.
-            </div>
-            <div>
-                <span
-                    style="font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; color:var(--ink);">Perguruan
-                    Tinggi Negeri</span><br>Universitas Sebelas Maret (UNS)
-            </div>
+            <div><span
+                    style="font-family:var(--font-mono); font-size:var(--fs-micro); text-transform:uppercase; color:var(--ink);">Dosen
+                    Pengampu</span><br>Dr. Khabibi Muhammad Luthfi, M.Hum.</div>
         </div>
     </div>
 
@@ -1214,19 +1234,19 @@
         // Dropdown menu (mobile) + animasi ikon jadi silang
         const navToggle = document.getElementById('navToggle');
         const navPill = document.getElementById('navPill');
-        const navToggleLabel = document.getElementById('navToggleLabel');
         function closeMenu() {
             navPill.classList.remove('open');
             navToggle.classList.remove('open');
             navToggle.setAttribute('aria-expanded', 'false');
-            if (navToggleLabel) navToggleLabel.textContent = 'Menu';
+            navToggle.setAttribute('aria-label', 'Buka menu navigasi');
         }
         navToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             const isOpen = navPill.classList.toggle('open');
             navToggle.classList.toggle('open', isOpen);
             navToggle.setAttribute('aria-expanded', String(isOpen));
-            if (navToggleLabel) navToggleLabel.textContent = isOpen ? 'Tutup' : 'Menu';
+            navToggle.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+            if (isOpen) updateNavIndicator(true);
         });
         navPill.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
         document.addEventListener('click', (e) => {
@@ -1273,7 +1293,29 @@
             const currentId = sections[currentIndex] ? sections[currentIndex].id : null;
             navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + currentId));
             if (sectionIndicator) sectionIndicator.textContent = (currentIndex + 1) + ' / ' + sections.length;
+            updateNavIndicator();
         }
+
+        const navIndicatorEl = document.getElementById('navIndicator');
+        const indicatorColors = { formal: 'var(--c-formal)', ideal: 'var(--c-ideal)', filosofis: 'var(--c-filosofis)', praktis: 'var(--c-praktis)' };
+        let indicatorPlaced = false;
+        function updateNavIndicator(instant) {
+            const active = navPill.querySelector('a.active') || navPill.querySelector('a');
+            if (!active || !navIndicatorEl || navPill.offsetParent === null) return;
+            const id = (active.getAttribute('href') || '').slice(1);
+            const jump = instant === true || !indicatorPlaced;
+            if (jump) navIndicatorEl.style.transition = 'none';
+            navIndicatorEl.style.background = indicatorColors[id] || 'var(--ink)';
+            navIndicatorEl.style.left = active.offsetLeft + 'px';
+            navIndicatorEl.style.width = active.offsetWidth + 'px';
+            navIndicatorEl.style.top = (active.offsetTop + active.offsetHeight - 4) + 'px';
+            if (jump) { void navIndicatorEl.offsetWidth; navIndicatorEl.style.transition = ''; }
+            navIndicatorEl.style.opacity = '1';
+            indicatorPlaced = true;
+        }
+        window.addEventListener('resize', () => updateNavIndicator(true));
+        window.addEventListener('load', () => updateNavIndicator(true));
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => updateNavIndicator(true));
 
         function updateProgressBar() {
             const doc = document.documentElement;
